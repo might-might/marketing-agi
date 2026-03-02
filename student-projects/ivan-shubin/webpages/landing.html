@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Платформа поддержки ветеранов и семей — спокойствие, связь, понимание</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #0f1419;
+      --color-surface: #1a2332;
+      --color-surface-hover: #243044;
+      --color-text: #e8ecf1;
+      --color-text-muted: #8b9aad;
+      --color-accent: #4a9eff;
+      --color-accent-soft: rgba(74, 158, 255, 0.15);
+      --color-success: #34c759;
+      --color-border: #2d3a4d;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(74, 158, 255, 0.12), transparent),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(52, 199, 89, 0.06), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-text);
+    }
+
+    .logo span {
+      color: var(--color-accent);
+    }
+
+    nav a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--color-accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #3a8eef;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-accent);
+      border: 2px solid var(--color-accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--color-accent-soft);
+    }
+
+    .hero {
+      padding: 80px 0 100px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h1 .highlight {
+      color: var(--color-accent);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .needs {
+      padding: 60px 0 80px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 48px;
+      color: var(--color-text);
+    }
+
+    .needs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .need-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.25s;
+    }
+
+    .need-card:hover {
+      border-color: var(--color-accent);
+      background: var(--color-surface-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .need-card .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background: var(--color-accent-soft);
+    }
+
+    .need-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--color-text);
+    }
+
+    .need-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .need-card .badge {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+    }
+
+    .segments {
+      padding: 80px 0 100px;
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .segments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .segment-card {
+      padding: 36px;
+      border-radius: var(--radius-lg);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+    }
+
+    .segment-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      color: var(--color-accent);
+    }
+
+    .segment-card ul {
+      list-style: none;
+    }
+
+    .segment-card li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .segment-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-success);
+      font-weight: 700;
+    }
+
+    .how {
+      padding: 80px 0 100px;
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .step h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .cta-block {
+      padding: 80px 0 100px;
+      text-align: center;
+    }
+
+    .cta-block h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .cta-block p {
+      color: var(--color-text-muted);
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 48px 0 64px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="logo">Платформа<span>Поддержки</span></div>
+    <nav>
+      <a href="#needs">Потребности</a>
+      <a href="#segments">Для кого</a>
+      <a href="#how">Как работает</a>
+    </nav>
+    <a href="#cta" class="btn btn-primary">Узнать больше</a>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <h1>Спите спокойно. Справляйтесь со стрессом. <span class="highlight">Будьте на связи.</span></h1>
+      <p>Цифровая платформа поддержки ветеранов и их семей. Анонимно, в любое время. Умный помощник и связь с живым человеком — когда нужно.</p>
+      <div class="hero-cta">
+        <a href="#cta" class="btn btn-primary">Попробовать бесплатно</a>
+        <a href="#needs" class="btn btn-outline">Узнать подробнее</a>
+      </div>
+    </section>
+
+    <section id="needs" class="needs container">
+      <h2 class="section-title">То, что вы искали</h2>
+      <div class="needs-grid">
+        <div class="need-card">
+          <div class="icon">😴</div>
+          <h3>Спать спокойно, не нервничать</h3>
+          <p>Практики и поддержка для снижения тревоги и здорового сна. Без очередей и походов к врачу.</p>
+          <span class="badge">Сон и снижение тревоги</span>
+        </div>
+        <div class="need-card">
+          <div class="icon">🧘</div>
+          <h3>Справляться со вспышками гнева</h3>
+          <p>Самостоятельно управлять состоянием между консультациями. Не срываться на окружающих — стабилизироваться самому, восстановить контакт с семьёй.</p>
+          <span class="badge">Эмоциональная саморегуляция</span>
+        </div>
+        <div class="need-card">
+          <div class="icon">🤝</div>
+          <h3>Помочь коллеге в сложной ситуации</h3>
+          <p>Инструменты и советы, чтобы поддержать того, кто рядом. Помогая другому — помогаешь себе.</p>
+          <span class="badge">Поддержка коллег</span>
+        </div>
+        <div class="need-card">
+          <div class="icon">🔒</div>
+          <h3>Пообщаться анонимно</h3>
+          <p>Довериться интеллектуальному собеседнику анонимно. Не выносить сор из избы — кому-то сложно открыться людям. Поговорить, когда тяжело, без похода к врачу.</p>
+          <span class="badge">Конфиденциальность</span>
+        </div>
+        <div class="need-card">
+          <div class="icon">👤</div>
+          <h3>Чтобы относились как к нормальному человеку</h3>
+          <p>Чтобы видели опору и поддержку, а не объект жалости. Уважали и не чувствовали угрозы. Соплеменники не испытывали к тебе как к неполноценному.</p>
+          <span class="badge">Социальная интеграция</span>
+        </div>
+        <div class="need-card">
+          <div class="icon">📚</div>
+          <h3>Повысить культуру ментального здоровья</h3>
+          <p>Снизить стигматизацию. Привыкнуть, что к психологу ходить и такими штуками пользоваться — нормальная история.</p>
+          <span class="badge">Образование</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="segments" class="segments">
+      <div class="container">
+        <h2 class="section-title">Для ветеранов, семей и организаций</h2>
+        <div class="segments-grid">
+          <div class="segment-card">
+            <h3>Ветераны</h3>
+            <ul>
+              <li>Управлять состоянием между консультациями</li>
+              <li>Чувствовать себя нормальным, полноценным человеком</li>
+              <li>Чтобы к тебе относились с уважением, видели опору</li>
+              <li>Довериться собеседнику анонимно</li>
+            </ul>
+          </div>
+          <div class="segment-card">
+            <h3>Семьи</h3>
+            <ul>
+              <li>Правильно реагировать, чтобы не усугублять ситуацию</li>
+              <li>Перестать жить в постоянном напряжении</li>
+              <li>Чувствовать поддержку — что не один в этой ситуации</li>
+              <li>Сохранить семью, не бояться каждой реакции</li>
+            </ul>
+          </div>
+          <div class="segment-card">
+            <h3>НКО и специалисты</h3>
+            <ul>
+              <li>Работать с системой, а не тушить пожары</li>
+              <li>Поддержка подопечного между консультациями</li>
+              <li>Не терять связь — не выпадать из терапии</li>
+              <li>Анализировать данные и наблюдать динамику</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="how container">
+      <h2 class="section-title">Как это работает</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Регистрация</h4>
+          <p>Быстро и анонимно. Без очередей и справок.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Умный помощник 24/7</h4>
+          <p>Голосовой ИИ-ассистент — поговорить можно в любой момент.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Связь с человеком</h4>
+          <p>Когда нужен живой диалог — соединяем со специалистом.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Непрерывная поддержка</h4>
+          <p>История и динамика — вы не выпадаете из терапии.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="cta-block container">
+      <h2>Готовы попробовать?</h2>
+      <p>Платформа для тех, кто хочет спокойствия, связи и понимания. Без стигмы, без очередей.</p>
+      <a href="#" class="btn btn-primary">Оставить заявку</a>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>Цифровая платформа поддержки ветеранов и их семей.</p>
+  </footer>
+</body>
+</html>
