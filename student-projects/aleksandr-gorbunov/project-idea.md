@@ -31,6 +31,7 @@
 
 ### Платформы и технологии
 
+- **Демо:** https://might-might.ru/demos/
 - **Web-first** (не mobile-first): Telegram Mini App, PWA, Yandex.Games, VK Mini Apps, itch.io, собственный домен
 - **6-12 мес:** нативные iOS/Android (Capacitor/React Native)
 - **Стек MVP:** Phaser 3 (~150-300KB) + HTML5
